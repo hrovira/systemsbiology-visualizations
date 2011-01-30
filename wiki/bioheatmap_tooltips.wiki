@@ -1,0 +1,45 @@
+#BioHeatMap tooltips.
+
+= Introduction =
+
+The BioHeatMap displays 'heatmap' diagrams from dense tables of numeric data. The aim of this work is to extend the API and code-base to enable pop-up tooltips to present cell-specific additional information to the user.
+
+The initial aims are as follows:
+
+  * Implementation of a tooltip showing metadata for each cell of a BioHeatMap Google visualization when a user hovers the mouse over the cell.
+  * Tooltip text data can be split into one or more lines using the newline character "\n".
+  * The tooltip functionality can be turned on or off with a "displayCellToolTips" parameter, which defaults to true, enabling tooltip display.
+
+= Design =
+
+== Alterations to the public API ==
+
+Currently, the data to be displayed is published to BioHeatMap through the `setCell()` call. This will be extended to accept an optional fourth argument containing tooltip text.
+
+{{{
+data.setCell(1, 1, 3.5); // legacy call
+data.setCell(1, 2, 3.2, "Note about this cell"); // simple tooltip
+data.setCell(2, 1, 0.3, "This is a\nmulti-line comment"); // multi-line message
+data.setCell(2, 2, 2.1, ""); // an empty tooltip
+}}}
+
+== Open questions ==
+
+  # Should empty tooltip text be normalized to null, so have no display, or should they display a small tooltip with no content?
+  # Is plain text the only content? Perhaps we should optionally allow nested HTML.
+
+== Configuration ==
+
+It would be nice to be able to configure aspects of the tooltip display. In any event, the display of tooltips will require some choices to be made about aspects such as the color of the background. These may include things like:
+
+  * tooltip box
+    * the background color
+    * border color, thickness, style, ...
+  * tooltip text
+    * font, size, color, ...
+    * face, style, weight, ...
+    * justification/alignment (right/left/centered), direction, ...
+
+== Implementation choice ==
+
+The tooltips themselves could be implemented either through the `canvas` API or by js/dhtml actions on a `div` element. The `div` element is probably easiest to implement, while `canvas` may be more customizable. 
