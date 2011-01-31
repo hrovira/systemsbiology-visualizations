@@ -66,3 +66,13 @@ data.setCell(1, 2, 2.0, null, { tooltip: '' } ); // an empty tooltip
 }}}
 
 This is not as pretty as I'd originally hoped, but it appears to allow tooltip text to be passed through without affecting existing Google visualization code.
+
+= Actual Implementation =
+
+The tooltip is represented by a div, stored in the `tooltipElement` property of the heat map. This div is managed by `initialize()`, `draw()` and `_setTooltipElement`. In `draw()`, `_getMouseXY` is used to register both the `onclick` and `onmousemove` handlers.
+
+The `_getMouseXY` method has been significantly re-worked. It now takes a parameter called `handler` that is a function to be called with the position relative to the canvas. Closures for `_onClickEvent()` and `_onMoveEvent()` are passed to `getMouseXY` in `draw()` to attach them to the relevant canvas events.
+
+In addition to the change in the `getMouseXY` signature, the implementation has been gutted. The old code was buggy. It didn't seem to correctly calculate the position of the mouse event relative to the heatmap element. I've liberally adapted code from quirksmode to fix this. I've not tested it in all browsers.
+
+To support the mouse movement calls, I have added `_onMoveEvent`. This calculates the cell currently under the mouse and then modifies the `tooltipElement` div to display a tooltip.
