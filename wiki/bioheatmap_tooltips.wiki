@@ -10,7 +10,7 @@ The initial aims are as follows:
   * Tooltip text data can be split into one or more lines using the newline character "\n".
   * The tooltip functionality can be turned on or off with a "displayCellToolTips" parameter, which defaults to true, enabling tooltip display.
 
-= Design =
+= Initial Design =
 
 == Alterations to the public API ==
 
@@ -46,3 +46,23 @@ It would be nice to be able to configure aspects of the tooltip display. In any 
 == Implementation choice ==
 
 The tooltips themselves could be implemented either through the `canvas` API or by js/dhtml actions on a `div` element. The `div` element is probably easiest to implement, while `canvas` may be more customizable. 
+
+= Actual Design =
+
+Now that I have started implementing this, some things have changed. The google data table API already has a 4-arg form of [http://code.google.com/apis/visualization/documentation/reference.html#DataTable_setCell `setCell()`], where the fourth argument is a pre-formatted representation of the value. However, it also accepts a 5th argument that is an object (key-value pairs) of supplementary data. This seems like a good place to put our tooltip text.
+
+{{{
+var data = new google.visualization.DataTable();
+data.addColumn('string', 'Gene Name');
+data.addColumn('number', 'liver_1');
+data.addColumn('number', 'liver_2');
+data.addRows(2);
+data.setCell(0, 0, 'gene_1');
+data.setCell(0, 1, 1.0); // no tooltip
+data.setCell(0, 2, 2.0, null, { tooltip: 'some interesting facts' }); // a simple tooltip
+data.setCell(1, 0, null, 'gene_2');
+data.setCell(1, 1, 3.0, null, { tooltip: 'some more\ninteresting facts' }); // a tooltip with newlines
+data.setCell(1, 2, 2.0, null, { tooltip: '' } ); // an empty tooltip
+}}}
+
+This is not as pretty as I'd originally hoped, but it appears to allow tooltip text to be passed through without affecting existing Google visualization code.
