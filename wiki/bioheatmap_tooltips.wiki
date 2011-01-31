@@ -76,3 +76,7 @@ The `_getMouseXY` method has been significantly re-worked. It now takes a parame
 In addition to the change in the `getMouseXY` signature, the implementation has been gutted. The old code was buggy. It didn't seem to correctly calculate the position of the mouse event relative to the heatmap element. I've liberally adapted code from quirksmode to fix this. I've not tested it in all browsers.
 
 To support the mouse movement calls, I have added `_onMoveEvent`. This calculates the cell currently under the mouse and then modifies the `tooltipElement` div to display a tooltip.
+
+= Style info =
+
+The tooltip div defaults to the CSS class `bioHeatMapTooltip". A default class is supplied for this, but you can supply your own. If you want to use a different style class, pass in the option `tooltipClass`.
