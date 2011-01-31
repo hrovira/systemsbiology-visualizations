@@ -34,7 +34,7 @@ It would be nice to be able to configure aspects of the tooltip display. In any 
 
   * tooltip delays
     * delay before the tooltip displays
-    * delay before the tooltip auto-hides (can be dissabled)
+    * delay before the tooltip auto-hides (can be disabled)
   * tooltip box
     * the background color
     * border color, thickness, style, ...
