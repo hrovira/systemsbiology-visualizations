@@ -47,7 +47,9 @@ It would be nice to be able to configure aspects of the tooltip display. In any 
 
 The tooltips themselves could be implemented either through the `canvas` API or by js/dhtml actions on a `div` element. The `div` element is probably easiest to implement, while `canvas` may be more customizable. 
 
-= Actual API =
+= The Implementation =
+
+== Actual API ==
 
 Now that I have started implementing this, some things have changed. The google data table API already has a 4-arg form of [http://code.google.com/apis/visualization/documentation/reference.html#DataTable_setCell `setCell()`], where the fourth argument is a pre-formatted representation of the value. However, it also accepts a 5th argument that is an object (key-value pairs) of supplementary data. This seems like a good place to put our tooltip text.
 
@@ -67,7 +69,7 @@ data.setCell(1, 2, 2.0, null, { tooltip: '' } ); // an empty tooltip
 
 This is not as pretty as I'd originally hoped, but it appears to allow tooltip text to be passed through without affecting existing Google visualization code.
 
-= Actual Implementation =
+== Implementation Details ==
 
 The tooltip is represented by a div, stored in the `tooltipElement` property of the heat map. This div is managed by `initialize()`, `draw()` and `_setTooltipElement`. In `draw()`, `_getMouseXY` is used to register both the `onclick` and `onmousemove` handlers.
 
@@ -77,6 +79,12 @@ In addition to the change in the `getMouseXY` signature, the implementation has 
 
 To support the mouse movement calls, I have added `_onMoveEvent`. This calculates the cell currently under the mouse and then modifies the `tooltipElement` div to display a tooltip.
 
-= Style info =
+== Styles ==
 
-The tooltip div defaults to the CSS class `bioHeatMapTooltip`. A default class is supplied for this, but you can supply your own. If you want to use a different style class, pass in the option `tooltipClass`.
+The tooltip div defaults to the CSS class `bioHeatMapTooltip`. A default class is supplied for this, but you can supply your own.
+
+== Configuration Options ==
+
+|| Option || Default || Description ||
+|| `tooltipClass` || `.bioHeatMapTooltip` || name of the style class to be applied to the tooltip div ||
+|| `tooltipDelay` || `500` || delay (in ms) before a tooltip pops up ||
