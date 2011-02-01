@@ -47,7 +47,7 @@ It would be nice to be able to configure aspects of the tooltip display. In any 
 
 The tooltips themselves could be implemented either through the `canvas` API or by js/dhtml actions on a `div` element. The `div` element is probably easiest to implement, while `canvas` may be more customizable. 
 
-= Actual Design =
+= Actual API =
 
 Now that I have started implementing this, some things have changed. The google data table API already has a 4-arg form of [http://code.google.com/apis/visualization/documentation/reference.html#DataTable_setCell `setCell()`], where the fourth argument is a pre-formatted representation of the value. However, it also accepts a 5th argument that is an object (key-value pairs) of supplementary data. This seems like a good place to put our tooltip text.
 
@@ -79,4 +79,4 @@ To support the mouse movement calls, I have added `_onMoveEvent`. This calculate
 
 = Style info =
 
-The tooltip div defaults to the CSS class `bioHeatMapTooltip". A default class is supplied for this, but you can supply your own. If you want to use a different style class, pass in the option `tooltipClass`.
+The tooltip div defaults to the CSS class `bioHeatMapTooltip`. A default class is supplied for this, but you can supply your own. If you want to use a different style class, pass in the option `tooltipClass`.
