@@ -88,3 +88,4 @@ The tooltip div defaults to the CSS class `bioHeatMapTooltip`. A default class i
 || Option || Default || Description ||
 || `tooltipClass` || `.bioHeatMapTooltip` || name of the style class to be applied to the tooltip div ||
 || `tooltipDelay` || `500` || delay (in ms) before a tooltip pops up ||
+|| `displayCellTooltips` || true || heatmap-wide toggle for tooltip display - set to false to dissable tooltips, true (or any other value) to enable them ||
